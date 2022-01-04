@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Live Streaming Demonstration</title>
+</head>
+<body>
+<div class="min-h-full">
+  <nav class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <img class="h-16 w-16" src="https://www.urbandatalab.pt/images/partners/nova_ims.png" alt="NOVA IMS Logo">
+          </div>
+            <div class="ml-10 flex items-baseline space-x-4">
+                <span class="text-gray-900 text-sm font-medium" aria-current="page">DLNN - TP2G</span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <header class="bg-white">
+    <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-xl font-bold text-gray-900">
+        😷 White and Blue Facemask Detection
+      </h1>
+    </div>
+  </header>
+  <main>
+    <div class="max-w-2xl mx-auto py-2 sm:px-6 lg:px-8">
+      <!-- Replace with your content -->
+      <div class="px-4 py-2 sm:px-0">
+            <img src="{{ url_for('video_feed') }}" width="100%">
+      </div>
+      <!-- /End replace -->
+    </div>
+  </main>
+</div>
+</body>
+</html>
