@@ -6,10 +6,9 @@ import numpy as np
 
 app = Flask(__name__)
 
-camera = cv2.VideoCapture(0)
-
 
 def gen_frames():  # generate frame by frame from camera
+    camera = cv2.VideoCapture(-1, cv2.CAP_V4L)
     # We load the xml file
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     model = keras.models.load_model('maskNet_model10.h5')
