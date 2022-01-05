@@ -12,8 +12,8 @@ $(document).ready(function(){
     if (!localMediaStream) {
       return;
     }
-    console.log(video.height)
-    ctx.drawImage(video, 0, 0, 300, 150);
+
+    ctx.drawImage(video, 0, 0);
 
     let dataURL = canvas.toDataURL('image/jpeg', 1.0);
     socket.emit('input image', dataURL);
@@ -25,8 +25,8 @@ $(document).ready(function(){
 
   var constraints = {
     video: {
-      width: { min: 300 },
-      height: { min: 300 },
+      width: { min: 640 },
+      height: { min: 640 },
       facingMode: "user"
     }
   };
