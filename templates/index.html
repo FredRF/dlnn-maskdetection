@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.4.0/socket.io.min.js" integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous"></script>
     <title>Live Streaming Demonstration</title>
 </head>
 <body>
@@ -15,7 +16,7 @@
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img class="h-16 w-16" src="https://www.urbandatalab.pt/images/partners/nova_ims.png" alt="NOVA IMS Logo">
+            <img class="h-16 w-16" src="{{ url_for('static', filename='imgs/nova_ims.png') }}" alt="NOVA IMS Logo">
           </div>
             <div class="ml-10 flex items-baseline space-x-4">
                 <span class="text-gray-900 text-sm font-medium" aria-current="page">DLNN - TP2G</span>
@@ -32,14 +33,19 @@
     </div>
   </header>
   <main>
-    <div class="max-w-2xl mx-auto py-2 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto py-2 sm:px-6 lg:px-8">
       <!-- Replace with your content -->
       <div class="px-4 py-2 sm:px-0">
-            <img src="{{ url_for('video_feed') }}" width="100%">
+            <video autoplay="true" id="videoElement" hidden></video>
+            <canvas id="canvasElement" hidden></canvas>
+
+            <img id="imageElement" src="{{ url_for('video_feed') }}">
+
       </div>
       <!-- /End replace -->
     </div>
   </main>
 </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
