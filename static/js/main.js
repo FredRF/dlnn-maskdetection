@@ -7,7 +7,7 @@ $(document).ready(function(){
   var localMediaStream = null;
 
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-console.log(location.protocol)
+
   function sendSnapshot() {
     if (!localMediaStream) {
       return;
