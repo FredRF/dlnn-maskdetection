@@ -4,11 +4,14 @@ from PIL import Image
 from tensorflow import keras
 from flask_socketio import SocketIO
 import tensorflow as tf
+import logging
+from sys import stdout
 import numpy as np
 from camera import Camera
 from process import webopencv
 
 app = Flask(__name__)
+app.logger.addHandler(logging.StreamHandler(stdout))
 app.config['DEBUG'] = True
 socketio = SocketIO(app)
 camera = Camera(webopencv())
@@ -26,7 +29,6 @@ def test_connect():
     app.logger.info("client connected")
 
 def gen_frames():  # generate frame by frame from camera
-    #camera = cv2.VideoCapture(-1, cv2.CAP_V4L)
     # We load the xml file
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     model = keras.models.load_model('maskNet_model10.h5')
@@ -34,8 +36,8 @@ def gen_frames():  # generate frame by frame from camera
 
     while True:
         # Capture frame-by-frame
-
         img = base64.b64decode(camera.get_frame())
+
         frame = cv2.cvtColor(np.array(Image.open(io.BytesIO(img))), cv2.COLOR_RGB2BGR)
         frame = cv2.flip(frame, 1, 1)  # Flip to act as a mirror
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -49,14 +51,14 @@ def gen_frames():  # generate frame by frame from camera
             end_y = start_y + height
             face = frame[start_y:end_y, start_x:end_x]
 
-            # face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
-            # face = cv2.resize(face, (64, 64))
-            # img_array = tf.keras.preprocessing.image.img_to_array(face)
-            # img_array = tf.expand_dims(img_array, 0)  # Create a batch
+            face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
+            face = cv2.resize(face, (64, 64))
+            img_array = tf.keras.preprocessing.image.img_to_array(face)
+            img_array = tf.expand_dims(img_array, 0)  # Create a batch
 
-            resized = cv2.resize(face, (64, 64))
-            normalized = resized / 255.0
-            img_array = np.reshape(normalized, (1, 64, 64, 3))
+            # resized = cv2.resize(face, (64, 64))
+            # normalized = resized / 255.0
+            # img_array = np.reshape(normalized, (1, 64, 64, 3))
 
             predictions = model.predict(img_array)
             score = tf.nn.softmax(predictions[0])
@@ -99,5 +101,5 @@ def index():
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0')
+    socketio.run(app)
 
